@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FD2AE667-0A2D-4D38-9ED5-E247FF30DD16}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{617B7D23-C3E0-4CA7-85DA-C2C8D280FF8F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorLocalizer", "src\libs\BlazorLocalizer\BlazorLocalizer.csproj", "{B0F52BAF-C205-44D4-8FDD-F23DE401ACBE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorLocalizer.ServerSide", "src\libs\BlazorLocalizer.ServerSide\BlazorLocalizer.ServerSide.csproj", "{AD3F80C6-D2C6-4BAF-9AC4-8CE38F69D478}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorLocalizer.WebAssembly", "src\libs\BlazorLocalizer.WebAssembly\BlazorLocalizer.WebAssembly.csproj", "{1F36D30F-18F8-4854-9E67-6F249F293C90}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{150FD01E-4883-43A0-B0CB-0563E9FC3560}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+		src\SharedProperties.props = src\SharedProperties.props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B0F52BAF-C205-44D4-8FDD-F23DE401ACBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0F52BAF-C205-44D4-8FDD-F23DE401ACBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0F52BAF-C205-44D4-8FDD-F23DE401ACBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0F52BAF-C205-44D4-8FDD-F23DE401ACBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD3F80C6-D2C6-4BAF-9AC4-8CE38F69D478}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD3F80C6-D2C6-4BAF-9AC4-8CE38F69D478}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD3F80C6-D2C6-4BAF-9AC4-8CE38F69D478}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD3F80C6-D2C6-4BAF-9AC4-8CE38F69D478}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F36D30F-18F8-4854-9E67-6F249F293C90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F36D30F-18F8-4854-9E67-6F249F293C90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F36D30F-18F8-4854-9E67-6F249F293C90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F36D30F-18F8-4854-9E67-6F249F293C90}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{617B7D23-C3E0-4CA7-85DA-C2C8D280FF8F} = {FD2AE667-0A2D-4D38-9ED5-E247FF30DD16}
+		{B0F52BAF-C205-44D4-8FDD-F23DE401ACBE} = {617B7D23-C3E0-4CA7-85DA-C2C8D280FF8F}
+		{AD3F80C6-D2C6-4BAF-9AC4-8CE38F69D478} = {617B7D23-C3E0-4CA7-85DA-C2C8D280FF8F}
+		{1F36D30F-18F8-4854-9E67-6F249F293C90} = {617B7D23-C3E0-4CA7-85DA-C2C8D280FF8F}
+	EndGlobalSection
+EndGlobal

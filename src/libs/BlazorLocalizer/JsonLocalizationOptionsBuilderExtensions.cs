@@ -1,0 +1,49 @@
+﻿// ----------------------------------------------------------------------
+// <copyright file="JsonLocalizationOptionsBuilderExtensions.cs" company="Ömer Çelik">
+// Copyright © 2023 Ömer Çelik.
+// Licensed under the MIT license.
+// See LICENSE file in the project root for full license information.
+// </copyright>
+// ----------------------------------------------------------------------
+
+using System;
+
+namespace BlazorLocalizer
+{
+    /// <summary>
+    /// Extension methods to setup embedded Json file support.
+    /// </summary>
+    public static class JsonLocalizationOptionsBuilderExtensions
+    {
+        /// <summary>
+        /// Setup default embedded Json support.
+        /// </summary>
+        /// <param name="builder">The builder to setup.</param>
+        /// <returns>The given builder updated with the Json embedded options.</returns>
+        public static JsonLocalizationOptionsBuilder UseEmbeddedJson(
+            this JsonLocalizationOptionsBuilder builder)
+            => builder.UseEmbeddedJson(null);
+
+        /// <summary>
+        /// Setup embedded Json support with the given setup action.
+        /// </summary>
+        /// <param name="builder">The builder to setup.</param>
+        /// <param name="setup">The setup action.</param>
+        /// <returns>The given builder updated with the Json embedded options.</returns>
+        public static JsonLocalizationOptionsBuilder UseEmbeddedJson(
+            this JsonLocalizationOptionsBuilder builder,
+            Action<EmbeddedJsonLocalizationOptions>? setup)
+        {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            var optExt = new EmbeddedJsonLocalizationOptions();
+
+            setup?.Invoke(optExt);
+
+            return builder.AddExtensionOptions(optExt);
+        }
+    }
+}
