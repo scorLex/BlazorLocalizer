@@ -23,6 +23,10 @@ This project is derived from the ["BlazorJsonLocalization (by Xavier Solau)"](ht
 
  * * *
 
+ ## What's the difference?
+ * A new "HttpClient" can be created for language files so that requests go to a different URL. For example: .AddLocalizationHttpClient("LocalizationClient", "https://localhost:5004"). The "HttpClientName" parameter must be set in case a new "HttpClient" is created or an existing "HttpClient" is used.
+ * You can turn off the logs so that some errors are not displayed in the console. For this, the "DisableLogs" parameter must be set.
+
 ## Features
 
 * Enable Json based localization with embedded Json files.
@@ -35,7 +39,8 @@ This project is derived from the ["BlazorJsonLocalization (by Xavier Solau)"](ht
 
 ## Coming soon
 
-* Code first localization support
+* Disable logs completely
+* Parent classes will be filtered or removed completely
 
 ## Installation
 
