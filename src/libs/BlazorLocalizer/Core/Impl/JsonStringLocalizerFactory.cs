@@ -74,6 +74,21 @@ namespace BlazorLocalizer.Core.Impl
         private readonly ICacheService cacheService;
         private readonly ILogger<JsonStringLocalizerFactory> logger;
         private readonly ILogger<StringLocalizerProxy> loggerForStringLocalizerProxy;
+        public HttpHostedJsonLocalizationOptions HostedJsonLocalizationOptions
+        {
+            get
+            {
+                var hostedJsonLocalizationOptions = this.options.ExtensionOptions?.FirstOrDefault()?.Options as HttpHostedJsonLocalizationOptions;
+                if (hostedJsonLocalizationOptions != null)
+                {
+                    return hostedJsonLocalizationOptions;
+                }
+                else
+                {
+                    return new HttpHostedJsonLocalizationOptions();
+                }
+            }
+        }
 
         /// <summary>
         /// Setup the factory.
@@ -246,7 +261,10 @@ namespace BlazorLocalizer.Core.Impl
                 }
             }
 
-            this.logger.UnableToLoadLocalizationData(baseName, assembly, cultureInfo);
+            if (!this.HostedJsonLocalizationOptions.DisableLogs)
+            {
+                this.logger.UnableToLoadLocalizationData(baseName, assembly, cultureInfo);
+            }
 
             if (hadErrors)
             {
