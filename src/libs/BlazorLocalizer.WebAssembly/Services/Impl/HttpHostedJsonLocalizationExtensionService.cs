@@ -43,14 +43,22 @@ namespace BlazorLocalizer.WebAssembly.Services.Impl
         }
 
         ///<inheritdoc/>
-        protected override async Task<IReadOnlyDictionary<string, string>?> TryLoadFromUriAsync(string httpClientName, Uri uri, JsonSerializerOptions? jsonSerializerOptions)
+        protected override async Task<IReadOnlyDictionary<string, string>?> TryLoadFromUriAsync<TOptions>(TOptions options, Uri uri, JsonSerializerOptions? jsonSerializerOptions)
         {
+            var option = options as HttpHostedJsonLocalizationOptions;
+            if (option == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
             try
             {
-                this.logger.LoadingLocalizationDataFromHttpClient(uri);
+                if (!option.DisableLogs)
+                {
+                    this.logger.LoadingLocalizationDataFromHttpClient(uri);
+                }
 
-                var httpClient = this.httpClientFactory.CreateClient(httpClientName);
-
+                using var httpClient = this.httpClientFactory.CreateClient(option.HttpClientName);
                 using var stream = await httpClient.GetStreamAsync(uri).ConfigureAwait(false);
 
                 var map = await JsonHelper
@@ -58,10 +66,14 @@ namespace BlazorLocalizer.WebAssembly.Services.Impl
                     .ConfigureAwait(false);
 
                 return map ?? throw new FileLoadException("Null resources");
+
             }
             catch (HttpRequestException e) when (e.StatusCode == HttpStatusCode.NotFound)
             {
-                this.logger.HttpFileNotFound(uri, e);
+                if (!option.DisableLogs)
+                {
+                    this.logger.HttpFileNotFound(uri, e);
+                }
 
                 return null;
             }

@@ -72,9 +72,12 @@ namespace BlazorLocalizer.Services.Impl
                     var handler = options.NamingPolicy ?? ResourcePathHelper.DefaultHttpHostedJsonNamingPolicy;
                     var uri = handler.Invoke(basePath, culture.Name);
 
-                    this.logger.LoadingStaticAssets(uri);
+                    if (!options.DisableLogs)
+                    {
+                        this.logger.LoadingStaticAssets(uri);
+                    }
 
-                    return this.httpCacheService.ProcessLoadingTask(uri, () => TryLoadFromUriAsync(options.HttpClientName, uri, options.JsonSerializerOptions));
+                    return this.httpCacheService.ProcessLoadingTask(uri, () => TryLoadFromUriAsync(options, uri, options.JsonSerializerOptions));
                 })
                 .ConfigureAwait(false);
         }
@@ -82,10 +85,10 @@ namespace BlazorLocalizer.Services.Impl
         /// <summary>
         /// Load Http resources.
         /// </summary>
-        /// <param name="httpClientName">Base Url.</param>
+        /// <param name="options">Options.</param>
         /// <param name="uri">Resources Uri location.</param>
         /// <param name="jsonSerializerOptions">Custom JSON serializer options.</param>
         /// <returns>The loaded Json map.</returns>
-        protected abstract Task<IReadOnlyDictionary<string, string>?> TryLoadFromUriAsync(string httpClientName, Uri uri, JsonSerializerOptions? jsonSerializerOptions);
+        protected abstract Task<IReadOnlyDictionary<string, string>?> TryLoadFromUriAsync<TOptions>(TOptions options, Uri uri, JsonSerializerOptions? jsonSerializerOptions);
     }
 }

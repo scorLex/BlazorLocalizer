@@ -45,6 +45,11 @@ namespace BlazorLocalizer
         /// <summary>
         /// Set base address for hosted localization
         /// </summary>
-        public string? HttpClientName { get; set; }
+        public string HttpClientName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Disable logs
+        /// </summary>
+        public bool DisableLogs { get; set; }
     }
 }

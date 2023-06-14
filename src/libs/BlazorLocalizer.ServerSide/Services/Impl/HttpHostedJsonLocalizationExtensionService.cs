@@ -44,24 +44,40 @@ namespace BlazorLocalizer.ServerSide.Services.Impl
         }
 
         ///<inheritdoc/>
-        protected override async Task<IReadOnlyDictionary<string, string>?> TryLoadFromUriAsync(string httpClientName, Uri uri, JsonSerializerOptions? jsonSerializerOptions)
+        protected override async Task<IReadOnlyDictionary<string, string>?> TryLoadFromUriAsync<TOptions>(TOptions options, Uri uri, JsonSerializerOptions? jsonSerializerOptions)
         {
+            var option = options as HttpHostedJsonLocalizationOptions;
+            if (option == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
             if (uri == null)
             {
                 throw new ArgumentNullException(nameof(uri));
             }
 
-            this.logger.LoadingLocalizationDataFromHost(uri);
+            if (!option.DisableLogs)
+            {
+                this.logger.LoadingLocalizationDataFromHost(uri);
+            }
 
             var fileInfo = this.webHostEnvironment.WebRootFileProvider.GetFileInfo(uri.OriginalString);
 
             if (!fileInfo.Exists)
             {
-                this.logger.FileDoesNotExist(uri);
+                if (!option.DisableLogs)
+                {
+                    this.logger.FileDoesNotExist(uri);
+                }
+
                 return null;
             }
 
-            this.logger.LoadingFile(uri);
+            if (!option.DisableLogs)
+            {
+                this.logger.LoadingFile(uri);
+            }
 
             using var stream = fileInfo.CreateReadStream();
 

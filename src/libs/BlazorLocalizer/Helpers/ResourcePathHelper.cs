@@ -23,7 +23,7 @@ namespace BlazorLocalizer.Helpers
         /// <param name="baseName">The baseName of the resource to load.</param>
         /// <param name="rootNameSpace">The root namespace if not the assembly name.</param>
         /// <returns>The converted resource base path to load.</returns>
-        public static string ComputeBasePath(Assembly assembly, string baseName, string rootNameSpace)
+        public static string ComputeBasePath(Assembly assembly, string baseName, string? rootNameSpace)
         {
             if (assembly == null)
             {
