@@ -67,10 +67,6 @@ namespace BlazorLocalizer.Core.Impl
             {
                 if (this.cultureInfo != this.cultureInfoService.CurrentUICulture)
                 {
-                    this.logger.SwitchCurrentCulture(
-                        this.cultureInfo,
-                        this.cultureInfoService.CurrentUICulture);
-
                     // Looks like the current culture has changed so we need to switch the stringLocalizer.
                     this.cultureInfo = this.cultureInfoService.CurrentUICulture;
                     this.stringLocalizer = this.localizerFactory.CreateStringLocalizer(this.cultureInfo);

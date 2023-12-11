@@ -129,8 +129,6 @@ namespace BlazorLocalizer.Core.Impl
                 throw new ArgumentNullException(nameof(resourceSource));
             }
 
-            this.logger.CreateStringLocalizer(resourceSource.GetBaseName());
-
             var assembly = resourceSource.Assembly;
             var baseName = resourceSource.GetBaseName();
 
@@ -152,8 +150,6 @@ namespace BlazorLocalizer.Core.Impl
         ///<inheritdoc/>
         public IStringLocalizer Create(string baseName, string location)
         {
-            this.logger.CreateStringLocalizerInLocation(baseName, location);
-
             var assembly = Assembly.Load(location);
 
             return CreateStringLocalizerProxy(baseName, assembly, this.options.Fallbacks);
@@ -165,12 +161,8 @@ namespace BlazorLocalizer.Core.Impl
             var localizer = this.cacheService.Match(assembly, baseName, null);
             if (localizer != null)
             {
-                this.logger.GotStringLocalizerProxyFromCache(baseName, assembly);
-
                 return localizer.AsStringLocalizer;
             }
-
-            this.logger.CreateStringLocalizerProxy(baseName, assembly);
 
             localizer = new StringLocalizerProxy(
                 this.loggerForStringLocalizerProxy,
@@ -188,8 +180,6 @@ namespace BlazorLocalizer.Core.Impl
             var localizer = this.cacheService.Match(assembly, baseName, cultureInfo);
             if (localizer != null)
             {
-                this.logger.GotStringLocalizerFromCache(baseName, assembly, cultureInfo);
-
                 return localizer;
             }
 
@@ -197,8 +187,6 @@ namespace BlazorLocalizer.Core.Impl
 
             if (task.Status == TaskStatus.RanToCompletion)
             {
-                this.logger.LoadingTaskCompletedSynchronously(baseName, assembly, cultureInfo);
-
                 var map = task.Result;
                 if (map != null)
                 {
@@ -212,8 +200,6 @@ namespace BlazorLocalizer.Core.Impl
             }
             else
             {
-                this.logger.LoadingDataAsynchronously(baseName, assembly, cultureInfo);
-
                 IStringLocalizerInternal loadingLocalizer = this.options.IsDisplayKeysWhileLoadingAsynchronouslyEnabled
                     ? new NullStringLocalizer(cultureInfo, factoryInternal, false)
                     : new ConstStringLocalizer("...", factoryInternal);
@@ -243,20 +229,18 @@ namespace BlazorLocalizer.Core.Impl
                         var map = await extensionService.TryLoadAsync(options, assembly, baseName, cultureInfo).ConfigureAwait(false);
                         if (map != null)
                         {
-                            this.logger.LoadedLocalizationData(baseName, assembly, cultureInfo);
                             return map;
                         }
                     }
                 }
-                catch (FileLoadException e)
+                catch (FileLoadException)
                 {
-                    this.logger.ErrorWhileLoadingLocalizationData(extensionOptionsContainer.ExtensionOptionsType.Name, e);
+
                 }
 #pragma warning disable CA1031 // Ne pas intercepter les types d'exception générale
-                catch (Exception e)
+                catch (Exception)
 #pragma warning restore CA1031 // Ne pas intercepter les types d'exception générale
                 {
-                    this.logger.ErrorWhileLoadingLocalizationData(extensionOptionsContainer.ExtensionOptionsType.Name, e);
                     hadErrors = true;
                 }
             }

@@ -85,8 +85,6 @@ namespace BlazorLocalizer.Services.Impl
                     var handler = options.NamingPolicy ?? ResourcePathHelper.DefaultEmbeddedJsonNamingPolicy;
                     var path = handler.Invoke(basePath, culture.Name);
 
-                    this.logger.LoadingEmbeddedData(path);
-
                     var fileProvider = fileProviderFactory.GetFileProvider(culture);
 
                     return TryLoadMapAsync(fileProvider, path, jsonSerializerOptions).AsTask();
@@ -103,11 +101,8 @@ namespace BlazorLocalizer.Services.Impl
 
             if (!fileInfo.Exists)
             {
-                this.logger.EmbeddedFileNotFound(path);
                 return null;
             }
-
-            this.logger.LoadingFile(path);
 
             using var stream = fileInfo.CreateReadStream();
 
