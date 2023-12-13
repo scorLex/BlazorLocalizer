@@ -32,7 +32,7 @@ namespace BlazorLocalizer.WebAssembly
             return services.AddHttpClient(clientName, client =>
              {
                  client.DefaultRequestHeaders.AcceptLanguage.Clear();
-                 client.DefaultRequestHeaders.AcceptLanguage.ParseAdd(CultureInfo.DefaultThreadCurrentCulture?.TwoLetterISOLanguageName);
+                 client.DefaultRequestHeaders.AcceptLanguage.ParseAdd(CultureInfo.DefaultThreadCurrentCulture?.Name);
                  client.BaseAddress = new Uri(baseAddress);
              }).Services;
         }
